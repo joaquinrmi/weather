@@ -1,0 +1,45 @@
+.modal
+{
+    position: fixed;
+    top: -100%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 2em;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.9);
+    opacity: 0;
+
+    header
+    {
+        width: 100%;
+
+        i
+        {
+            font-size: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+
+    section
+    {
+        flex: 1;
+    }
+}
+
+.modal.visible
+{
+    top: 0;
+    opacity: 1;
+    transition: opacity 0.25s;
+}
+
+.modal.closing
+{
+    opacity: 0;
+    transition: opacity 0.25s;
+}
