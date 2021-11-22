@@ -1,0 +1,188 @@
+.weather,
+.rain
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.rain
+{
+    gap: 2em;
+    padding: 2em;
+    box-sizing: border-box;
+
+    header
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .city-name
+        {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .country
+        {
+            font-size: 16px;
+            color: #fff;
+        }
+    }
+
+    section
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2em;
+        width: 100%;
+        flex: 1;
+
+        .temperature
+        {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            color: #fff;
+            user-select: none;
+
+            .ammount
+            {
+                font-size: 140px;
+                line-height: 140px;
+            }
+
+            .unit
+            {
+                padding-top: 18px;
+                font-size: 20px;
+                font-weight: 700;
+            }
+        }
+
+        .condition-container
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1em;
+
+            .condition
+            {
+                font-size: 22px;
+                font-weight: 700;
+                color: #fff;
+            }
+
+            .precipitation
+            {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 0.5em;
+                font-size: 18px;
+                color: #fff;
+            }
+        }
+    }
+
+    footer
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 2em;
+        width: 100%;
+
+        .forecast-container
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            width: 100%;
+            max-width: 600px;
+
+            .forecastday
+            {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                font-weight: 700;
+
+                .left
+                {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 1em;
+                    flex: 1;
+                    color: #fff;
+
+                    img
+                    {
+                        width: 40px;
+                    }
+                }
+
+                .right
+                {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: flex-end;
+                    gap: 0.3em;
+                    color: #fff;
+                }
+            }
+        }
+
+        .button-container
+        {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 250px;
+        }
+    }
+}
+
+.weather.day
+{
+    background: linear-gradient(180deg, #0080C8, #0D3880);
+}
+
+.weather.night
+{
+    background: linear-gradient(180deg, #313163, #02012C);
+}
+
+.rain.day
+{
+    background: linear-gradient(180deg, rgba(#626A78, 1), rgba(#3A3F50, 1));
+}
+
+.rain.night
+{
+    background: linear-gradient(180deg, rgba(#323642, 1), rgba(#16171C, 1));
+}
+
+.loading-container
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+}
