@@ -1,0 +1,18 @@
+.button
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    border-radius: 200px;
+    background-color: rgba(255, 255, 255, 0.5);
+    user-select: none;
+    cursor: pointer;
+
+    .content
+    {
+        font-size: 16px;
+        color: #fff;
+    }
+}
