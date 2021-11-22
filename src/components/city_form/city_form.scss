@@ -1,0 +1,21 @@
+.city-form
+{
+    display: flex;
+    flex-direction: column;
+    gap: 4em;
+    margin: 40% 0 0 0;
+
+    input
+    {
+        border: none;
+        border-bottom: 2px solid #aaa;
+        font-size: 32px;
+        color: #fff;
+        background: transparent;
+    }
+
+    input:focus
+    {
+        outline: none;
+    }
+}
