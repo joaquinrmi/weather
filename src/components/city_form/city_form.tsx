@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Button from "../button/";
 
@@ -23,6 +23,16 @@ interface CityFormElement extends HTMLFormElement
 
 const CityForm: React.FunctionComponent<Props> = (props) =>
 {
+    useEffect(() =>
+    {
+        const cityInput = document.getElementById(`input-${props.id}`) as HTMLInputElement;
+
+        if(cityInput !== null)
+        {
+            cityInput.focus();
+        }
+    });
+
     const onFormSubmit = (form: CityFormElement) =>
     {
         if(!form)
