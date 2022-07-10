@@ -5,7 +5,6 @@ import "./button.scss";
 export interface Props
 {
     id: string;
-    content: string;
 
     onClick?: MouseEventHandler<HTMLButtonElement>;
 }
@@ -18,7 +17,7 @@ const Button: React.FunctionComponent<Props> = (props) =>
         onClick={props.onClick}
     >
         <span className="content">
-            {props.content}
+            {props.children}
         </span>
     </button>;
 };
