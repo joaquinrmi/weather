@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import Button from "../button/";
 
@@ -11,74 +11,60 @@ export interface Props
     onSubmit(data: CityFormData): void;
 }
 
-export interface CityFormElement extends HTMLDivElement
-{
-    setFocus(): void;
-    clear(): void;
-
-    onSubmit(data: CityFormData): void;
-}
-
 export interface CityFormData
 {
     cityName: string;
 }
 
+interface CityFormElement extends HTMLFormElement
+{
+    city: HTMLInputElement;
+}
+
 const CityForm: React.FunctionComponent<Props> = (props) =>
 {
-    useEffect(() =>
+    const onFormSubmit = (form: CityFormElement) =>
     {
-        const form = document.getElementById(props.id) as CityFormElement;
-        const input = document.getElementById(`input-${props.id}`) as HTMLInputElement;
-
-        form.setFocus = () =>
+        if(!form)
         {
-            input.focus();
-        };
+            return;
+        }
 
-        form.clear = () =>
+        if(!form.city)
         {
-            input.value = "";
-        };
+            return;
+        }
 
-        form.onSubmit = () =>
-        {};
+        props.onSubmit({
+            cityName: form.city.value
+        });
+    };
 
-        const button = document.getElementById(`button-${props.id}`) as HTMLDivElement;
-
-        button.onclick = () =>
+    return <form
+        id={props.id}
+        className="city-form"
+        onSubmit={(ev) =>
         {
-            form.onSubmit({
-                cityName: input.value
-            });
-            form.clear();
-        };
+            ev.preventDefault();
 
-        const checkSubmit = (ev: KeyboardEvent) =>
-        {
-            if(ev.key === "Enter" && document.activeElement === input)
+            onFormSubmit(ev.currentTarget as CityFormElement);
+        }}
+    >
+        <input id={`input-${props.id}`} name="city" type="text" placeholder="Ciudad" />
+
+        <Button
+            id={`button-${props.id}`}
+            content="Aceptar"
+            onClick={() =>
             {
-                form.onSubmit({
-                    cityName: input.value
-                });
-                form.clear();
-            }
-        };
+                const form = document.getElementById(props.id) as CityFormElement;
 
-        document.addEventListener("keydown", checkSubmit);
+                onFormSubmit(form);
+            }}
+        />
 
-        return () =>
-        {
-            document.removeEventListener("keydown", checkSubmit);
-        };
-    },
-    []);
-
-    return <div id={props.id} className="city-form">
-        <input id={`input-${props.id}`} type="text" placeholder="Ciudad" />
-
-        <Button id={`button-${props.id}`} content="Aceptar" />
-    </div>;
+        <input type="submit" className="invisible" />
+    </form>;
 };
 
 export default CityForm;
