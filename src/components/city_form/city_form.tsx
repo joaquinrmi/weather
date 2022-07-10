@@ -7,6 +7,8 @@ import "./city_form.scss";
 export interface Props
 {
     id: string;
+
+    onSubmit(data: CityFormData): void;
 }
 
 export interface CityFormElement extends HTMLDivElement
