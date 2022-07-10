@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-
 import ForecastDayResponse from "../../forecast_day_response";
 import WeatherResponse from "../../weather_response";
+
 import Button from "../../components/button/";
 import Modal from "../../components/modal/";
 import CityForm from "../../components/city_form/";
 import Loading from "../../components/loading/";
+import PopupError from "../../components/popup_error";
 
 import "./weather.scss";
-import PopupError from "../../components/popup_error";
 
 export interface Props
 {}
@@ -36,23 +36,7 @@ const Weather: React.FunctionComponent<Props> = (props) =>
     const [ modalStatus, setModalStatus ] = useState<boolean>(false);
     const [ cityName, setCityName ] = useState<string>("parana");
 
-    const [ weatherData, setWeatherData ] = useState<WeatherData>({
-        loaded: false,
-        name: "Buenos Aires",
-        country: "Argentina",
-        condition: "Soleado",
-        isDay: true,
-        temperature: 0,
-        precipitation: 0,
-        cloud: 0,
-        forecast: [{
-            condition: "Soleado",
-            minTemperature: 0,
-            maxTemperature: 0,
-            chanceOfRain: 0,
-            icon: "",
-        }]
-    });
+    const [ weatherData, setWeatherData ] = useState<WeatherData | null>(null);
 
     const getWeather = async () =>
     {
@@ -77,7 +61,6 @@ const Weather: React.FunctionComponent<Props> = (props) =>
             }
 
             setWeatherData({
-                loaded: true,
                 name: data.location.name,
                 country: data.location.country,
                 condition: data.current.condition.text,
@@ -102,7 +85,7 @@ const Weather: React.FunctionComponent<Props> = (props) =>
 
     useEffect(() =>
     {
-        if(!weatherData.loaded)
+        if(weatherData === null)
         {
             return;
         }
@@ -133,6 +116,11 @@ const Weather: React.FunctionComponent<Props> = (props) =>
 
     useEffect(() =>
     {
+        if(weatherData === null)
+        {
+            return;
+        }
+
         const button = document.getElementById("change-city") as HTMLDivElement;
 
         button.onclick = () =>
@@ -140,131 +128,135 @@ const Weather: React.FunctionComponent<Props> = (props) =>
             setModalStatus(true);
         };
     },
-    []);
+    [ weatherData ]);
 
-    return <div id="weather" className="weather day">
-        <div id="rain-container" className="rain">
-            <header>
-                <span className="city-name">
-                    {weatherData.name}
-                </span>
-
-                <span className="country">
-                    {weatherData.country}
-                </span>
-            </header>
-
-            <section>
-                <div className="temperature">
-                    <span className="ammount">
-                        {weatherData.temperature}
-                    </span>
-                    <span className="unit">°C</span>
-                </div>
-
-                <span className="condition-container">
-                    <span className="condition">
-                        {weatherData.condition}
+    if(weatherData !== null)
+    {
+        return <div id="weather" className="weather day">
+            <div id="rain-container" className="rain">
+                <header>
+                    <span className="city-name">
+                        {weatherData.name}
                     </span>
 
-                    <div className="precipitation">
-                        <i className="fi fi-rr-raindrops"></i>
-                        <span>
-                            {weatherData.forecast[0].chanceOfRain}%
+                    <span className="country">
+                        {weatherData.country}
+                    </span>
+                </header>
+
+                <section>
+                    <div className="temperature">
+                        <span className="ammount">
+                            {weatherData.temperature}
                         </span>
+                        <span className="unit">°C</span>
                     </div>
-                </span>
-            </section>
 
-            <footer>
-                <div className="forecast-container">
-                    {weatherData.forecast.map((element, index) =>
-                    {
-                        return <div key={`forecastday-${index}`} className="forecastday">
-                            <div className="left">
-                                <img src={element.icon} alt={element.condition} />
+                    <span className="condition-container">
+                        <span className="condition">
+                            {weatherData.condition}
+                        </span>
 
-                                <span className="day">
-                                    {index === 0 ? "Hoy" : "Mañana"}
-                                </span>
+                        <div className="precipitation">
+                            <i className="fi fi-rr-raindrops"></i>
+                            <span>
+                                {weatherData.forecast[0].chanceOfRain}%
+                            </span>
+                        </div>
+                    </span>
+                </section>
 
-                                <span className="condition">
-                                    {element.condition}
-                                </span>
-                            </div>
+                <footer>
+                    <div className="forecast-container">
+                        {weatherData.forecast.map((element, index) =>
+                        {
+                            return <div key={`forecastday-${index}`} className="forecastday">
+                                <div className="left">
+                                    <img src={element.icon} alt={element.condition} />
 
-                            <div className="right">
-                                <span className="max-temperature">
-                                    {element.maxTemperature}°
-                                </span>
-                                <span className="slash">
-                                    /
-                                </span>
-                                <span className="min-temperature">
-                                    {element.minTemperature}°
-                                </span>
-                            </div>
-                        </div>;
-                    })}
-                </div>
+                                    <span className="day">
+                                        {index === 0 ? "Hoy" : "Mañana"}
+                                    </span>
 
-                <div className="button-container">
-                    <Button id="change-city">
-                        Cambiar ciudad
-                    </Button>
-                </div>
-            </footer>
-        </div>
+                                    <span className="condition">
+                                        {element.condition}
+                                    </span>
+                                </div>
 
-        {modalStatus ?
-            <Modal
-                id="modal-change-city"
-                closeRequest={() =>
-                {
-                    setModalStatus(false);
-                }}
-            >
-                <CityForm
-                    id="form-change-city"
-                    onSubmit={(data) =>
+                                <div className="right">
+                                    <span className="max-temperature">
+                                        {element.maxTemperature}°
+                                    </span>
+                                    <span className="slash">
+                                        /
+                                    </span>
+                                    <span className="min-temperature">
+                                        {element.minTemperature}°
+                                    </span>
+                                </div>
+                            </div>;
+                        })}
+                    </div>
+
+                    <div className="button-container">
+                        <Button id="change-city">
+                            Cambiar ciudad
+                        </Button>
+                    </div>
+                </footer>
+            </div>
+
+            {modalStatus ?
+                <Modal
+                    id="modal-change-city"
+                    closeRequest={() =>
                     {
                         setModalStatus(false);
-                        setCityName(state =>
-                        {
-                            return data.cityName;
-                        });
                     }}
-                />
-            </Modal> :
-            null
-        }
+                >
+                    <CityForm
+                        id="form-change-city"
+                        onSubmit={(data) =>
+                        {
+                            setModalStatus(false);
+                            setCityName(state =>
+                            {
+                                return data.cityName;
+                            });
+                        }}
+                    />
+                </Modal> :
+                null
+            }
 
-        {!weatherData.loaded ? <div className="loading-container">
+            {showError ?
+                <PopupError
+                    id="search-city-error"
+                    title={<h2>
+                        ¡Ups! Algo salió mal
+                    </h2>}
+                    content={<p>
+                        No se encontró la ciudad especificada.
+                    </p>}
+                    closeRequest={() =>
+                    {
+                        setShowError(false);
+                    }}
+                /> :
+                null
+            }
+        </div>;
+    }
+    else
+    {
+        return <div className="loading-container">
             <Loading />
-        </div> : null}
-
-        {showError ?
-            <PopupError
-                id="search-city-error"
-                title={<h2>
-                    ¡Ups! Algo salió mal
-                </h2>}
-                content={<p>
-                    No se encontró la ciudad especificada.
-                </p>}
-                closeRequest={() =>
-                {
-                    setShowError(false);
-                }}
-            /> :
-            null
-        }
-    </div>;
+        </div>;
+    }
 };
 
 interface WeatherData
 {
-    loaded: boolean;
     name: string;
     country: string;
     condition: string;
