@@ -207,7 +207,9 @@ const Weather: React.FunctionComponent<Props> = (props) =>
                 </div>
 
                 <div className="button-container">
-                    <Button id="change-city" content="Cambiar ciudad" />
+                    <Button id="change-city">
+                        Cambiar ciudad
+                    </Button>
                 </div>
             </footer>
         </div>
