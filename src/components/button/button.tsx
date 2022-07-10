@@ -10,11 +10,11 @@ export interface Props
 
 const Button: React.FunctionComponent<Props> = (props) =>
 {
-    return <div id={props.id} className="button">
+    return <button id={props.id} className="button">
         <span className="content">
             {props.content}
         </span>
-    </div>;
+    </button>;
 };
 
 export default Button;
