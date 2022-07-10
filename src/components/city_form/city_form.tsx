@@ -69,14 +69,15 @@ const CityForm: React.FunctionComponent<Props> = (props) =>
 
         <Button
             id={`button-${props.id}`}
-            content="Aceptar"
             onClick={() =>
             {
                 const form = document.getElementById(props.id) as CityFormElement;
 
                 onFormSubmit(form);
             }}
-        />
+        >
+            Aceptar
+        </Button>
 
         <input type="submit" className="invisible" />
     </form>;
