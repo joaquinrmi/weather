@@ -253,7 +253,9 @@ const Weather: React.FunctionComponent<Props> = (props) =>
                     No se encontró la ciudad especificada.
                 </p>}
                 closeRequest={() =>
-                {}}
+                {
+                    setShowError(false);
+                }}
             /> :
             null
         }
