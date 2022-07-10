@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import ForecastDayResponse from "../../forecast_day_response";
 import WeatherResponse from "../../weather_response";
 import Button from "../../components/button/";
-import Modal, { ModalElement } from "../../components/modal/";
-import CityForm, { CityFormElement } from "../../components/city_form/";
+import Modal from "../../components/modal/";
+import CityForm from "../../components/city_form/";
 import Loading from "../../components/loading/";
 
 import "./weather.scss";
@@ -31,6 +31,7 @@ const RAIN_NIGHT_BACKGROUND: BackgroundColor =
 
 const Weather: React.FunctionComponent<Props> = (props) =>
 {
+    const [ modalStatus, setModalStatus ] = useState<boolean>(false);
     const [ cityName, setCityName ] = useState<string>("parana");
 
     const [ weatherData, setWeatherData ] = useState<WeatherData>({
@@ -130,23 +131,11 @@ const Weather: React.FunctionComponent<Props> = (props) =>
 
     useEffect(() =>
     {
-        const modal = document.getElementById("modal-change-city") as ModalElement;
         const button = document.getElementById("change-city") as HTMLDivElement;
-        const cityForm = document.getElementById("form-change-city") as CityFormElement;
 
         button.onclick = () =>
         {
-            modal.open();
-            cityForm.setFocus();
-        };
-
-        cityForm.onSubmit = (data) =>
-        {
-            modal.close();
-            setCityName(state =>
-            {
-                return data.cityName;
-            });
+            setModalStatus(true);
         };
     },
     []);
@@ -223,9 +212,28 @@ const Weather: React.FunctionComponent<Props> = (props) =>
             </footer>
         </div>
 
-        <Modal id="modal-change-city">
-            <CityForm id="form-change-city" />
-        </Modal>
+        {modalStatus ?
+            <Modal
+                id="modal-change-city"
+                closeRequest={() =>
+                {
+                    setModalStatus(false);
+                }}
+            >
+                <CityForm
+                    id="form-change-city"
+                    onSubmit={(data) =>
+                    {
+                        setModalStatus(false);
+                        setCityName(state =>
+                        {
+                            return data.cityName;
+                        });
+                    }}
+                />
+            </Modal> :
+            null
+        }
 
         {!weatherData.loaded ? <div className="loading-container">
             <Loading />
