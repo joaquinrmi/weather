@@ -8,6 +8,7 @@ import CityForm from "../../components/city_form/";
 import Loading from "../../components/loading/";
 
 import "./weather.scss";
+import PopupError from "../../components/popup_error";
 
 export interface Props
 {}
@@ -31,6 +32,7 @@ const RAIN_NIGHT_BACKGROUND: BackgroundColor =
 
 const Weather: React.FunctionComponent<Props> = (props) =>
 {
+    const [ showError, setShowError ] = useState<boolean>(false);
     const [ modalStatus, setModalStatus ] = useState<boolean>(false);
     const [ cityName, setCityName ] = useState<string>("parana");
 
@@ -88,7 +90,7 @@ const Weather: React.FunctionComponent<Props> = (props) =>
         }
         else
         {
-            console.error(response.status);
+            setShowError(true);
         }
     };
 
@@ -240,6 +242,21 @@ const Weather: React.FunctionComponent<Props> = (props) =>
         {!weatherData.loaded ? <div className="loading-container">
             <Loading />
         </div> : null}
+
+        {showError ?
+            <PopupError
+                id="search-city-error"
+                title={<h2>
+                    ¡Ups! Algo salió mal
+                </h2>}
+                content={<p>
+                    No se encontró la ciudad especificada.
+                </p>}
+                closeRequest={() =>
+                {}}
+            /> :
+            null
+        }
     </div>;
 };
 
