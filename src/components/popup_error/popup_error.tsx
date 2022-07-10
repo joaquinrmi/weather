@@ -35,6 +35,31 @@ const PopupError: React.FunctionComponent<Props> = (props) =>
         }, 200);
     });
 
+    const closePopup = () =>
+    {
+        const element = document.getElementById(props.id) as HTMLDivElement;
+        if(element === null)
+        {
+            return;
+        }
+
+        element.classList.remove("end");
+
+        const animation = element.querySelector(".popup-animation") as HTMLDivElement;
+        if(animation === null)
+        {
+            return;
+        }
+
+        animation.classList.remove("end");
+
+        setTimeout(() =>
+        {
+            props.closeRequest();
+        },
+        250);
+    };
+
     return <div id={props.id} className="popup-error">
         <div className="popup-animation">
             <section className="popup-body">
@@ -47,7 +72,10 @@ const PopupError: React.FunctionComponent<Props> = (props) =>
                 </section>
 
                 <footer className="popup-footer">
-                    <button className="popup-close">
+                    <button
+                        className="popup-close"
+                        onClick={closePopup}
+                    >
                         Cerrar
                     </button>
                 </footer>
