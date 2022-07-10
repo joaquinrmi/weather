@@ -50,7 +50,12 @@ const CityForm: React.FunctionComponent<Props> = (props) =>
             onFormSubmit(ev.currentTarget as CityFormElement);
         }}
     >
-        <input id={`input-${props.id}`} name="city" type="text" placeholder="Ciudad" />
+        <input
+            id={`input-${props.id}`}
+            name="city"
+            type="text"
+            placeholder="Ciudad (nombre en inglés)"
+        />
 
         <Button
             id={`button-${props.id}`}
