@@ -5,6 +5,8 @@ import "./modal.scss";
 export interface Props
 {
     id: string;
+
+    closeRequest(): void;
 }
 
 export interface ModalElement extends HTMLDivElement
@@ -45,7 +47,7 @@ const Modal: React.FunctionComponent<Props> = (props) =>
         {
             if(ev.key === "Escape")
             {
-                modal.close();
+                props.closeRequest();
             }
         }
 
@@ -55,7 +57,7 @@ const Modal: React.FunctionComponent<Props> = (props) =>
         
         closeButton.onclick = () =>
         {
-            modal.close();
+            props.closeRequest();
         };
 
         return () =>
