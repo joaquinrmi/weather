@@ -1,0 +1,104 @@
+.popup-error
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.25s;
+
+    .popup-animation
+    {
+        position: absolute;
+        top: -100%;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 80%;
+        background-color: rgba(0, 0, 0, 0);
+        transition: top 0.25s;
+
+        .popup-body
+        {
+            flex: 0 0 450px;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 8px;
+
+            .popup-header
+            {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                text-align: center;
+                padding: 1em;
+                box-sizing: border-box;
+                color: rgb(40, 40, 40);
+
+                h1, h2, h3, h4, h5, h6
+                {
+                    margin: 0;
+                }
+            }
+
+            .popup-content
+            {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                text-align: center;
+                padding: 0 1em 0 1em;
+                box-sizing: border-box;
+                color: rgb(60, 60, 60);
+
+                p
+                {
+                    font-size: 19px;
+                }
+            }
+
+            .popup-footer
+            {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                padding: 1em;
+                box-sizing: border-box;
+            }
+
+            .popup-close
+            {
+                padding: 10px 20px;
+                font-size: 19px;
+                font-weight: 700;
+                color: #fff;
+                border: 0;
+                border-radius: 6px;
+                background-color: cadetblue;
+                cursor: pointer;
+            }
+
+            .popup-close:hover
+            {
+                background-color: rgb(81, 136, 138);
+            }
+        }
+    }
+
+    .popup-animation.end
+    {
+        top: 0;
+        transition: top 0.25s;
+    }
+}
+
+.popup-error.end
+{
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.25s;
+}
