@@ -9,40 +9,10 @@ export interface Props
     closeRequest(): void;
 }
 
-export interface ModalElement extends HTMLDivElement
-{
-    isOpen(): boolean;
-    open(): void;
-    close(): void;
-}
-
 const Modal: React.FunctionComponent<Props> = (props) =>
 {
     useEffect(() =>
     {
-        const modal = document.getElementById(props.id) as ModalElement;
-
-        modal.isOpen = () =>
-        {
-            return modal.classList.contains("visible") && !modal.classList.contains("closing");
-        };
-
-        modal.open = () =>
-        {
-            modal.classList.add("visible");
-        };
-
-        modal.close = () =>
-        {
-            modal.classList.add("closing");
-            setTimeout(() =>
-            {
-                modal.classList.remove("visible");
-                modal.classList.remove("closing");
-            },
-            250);
-        };
-
         const checkEscape = (ev: KeyboardEvent) =>
         {
             if(ev.key === "Escape")
@@ -67,7 +37,7 @@ const Modal: React.FunctionComponent<Props> = (props) =>
     },
     []);
 
-    return <div id={props.id} className="modal">
+    return <div id={props.id} className="modal visible">
         <header>
             <i id={`close-${props.id}`} className="fi fi-rr-angle-left"></i>
         </header>
